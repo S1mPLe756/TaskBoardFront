@@ -1,25 +1,18 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography, InputAdornment, Paper, Link } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import PersonIcon from "@mui/icons-material/Person";
-import { useAuthStore } from "../entities/user/model";
-import { useNavigate } from "react-router-dom";
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
 
-export const RegisterPage = () => {
-  const [name, setName] = useState("");
+import { Box, Button, TextField, Typography, InputAdornment, Paper } from "@mui/material";
+import {useAuth} from "../../hooks/useAuth";
+
+export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const register = useAuthStore((state) => state.register);
-  const navigate = useNavigate();
+  const { login, loading } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await register(email, name, password);
-
-    if (res && res.status >= 200 && res.status < 300) {
-      navigate("/login");
-    }
+    await login(email, password);
   };
 
   return (
@@ -36,32 +29,16 @@ export const RegisterPage = () => {
             elevation={10}
             sx={{
               p: 4,
-              width: 400,
+              width: 360,
               borderRadius: 3,
               textAlign: "center",
             }}
         >
           <Typography variant="h5" mb={3}>
-            Create Account
+            Welcome Back
           </Typography>
 
           <form onSubmit={handleSubmit}>
-            <TextField
-                label="Name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                fullWidth
-                margin="normal"
-                InputProps={{
-                  startAdornment: (
-                      <InputAdornment position="start">
-                        <PersonIcon />
-                      </InputAdornment>
-                  ),
-                }}
-            />
-
             <TextField
                 label="Email"
                 type="email"
@@ -97,6 +74,7 @@ export const RegisterPage = () => {
             <Button
                 type="submit"
                 variant="contained"
+                color="primary"
                 fullWidth
                 sx={{
                   mt: 3,
@@ -108,16 +86,33 @@ export const RegisterPage = () => {
                   },
                 }}
             >
-              Register
+              {loading ? "Загрузка..." : "Войти"}
             </Button>
 
-            <Box mt={2}>
-              <Link href="/login" underline="hover">
-                Already have an account? Login
-              </Link>
-            </Box>
+            <Button
+                variant="outlined"
+                fullWidth
+                sx={{
+                  mt: 2,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  color: "#6a11cb",
+                  borderColor: "#6a11cb",
+                  "&:hover": {
+                    background: "#f3e5f5",
+                    borderColor: "#2575fc",
+                    color: "#2575fc",
+                  },
+                }}
+                onClick={() => {
+                  window.location.href = "/register";
+                }}
+            >
+              Register
+            </Button>
           </form>
         </Paper>
       </Box>
   );
-};
+
+}

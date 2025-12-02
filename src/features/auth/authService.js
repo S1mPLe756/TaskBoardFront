@@ -1,6 +1,20 @@
-import { api } from "../../app/api";
+import {api} from "../../app/api";
+import {AuthTokens} from "../../entities/auth/authTokens";
 
-export const authService = {
-  login: (email, password) => api.post("/auth/login", { email, password }),
-  register: (email, username, password) => api.post("/auth/register", { email, username, password })
-};
+class AuthService {
+  async login(dto) {
+    const res = await api.post("/auth/login", dto);
+    return AuthTokens(res.data);
+  }
+
+  async register(dto) {
+    return api.post("/auth/register", dto);
+  }
+
+  async refresh(refreshToken) {
+    const res = await api.post("/auth/refresh", { refreshToken });
+    return res.data.accessToken;
+  }
+}
+
+export const authService = new AuthService();

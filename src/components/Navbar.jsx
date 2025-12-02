@@ -6,11 +6,11 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login"
-import {useAuthStore} from "../entities/user/model";
 import ProfileIcon from "@mui/icons-material/Person"
+import {useAuth} from "../hooks/useAuth";
 
 export const AppNavbar = () => {
-  const token = useAuthStore((state) => state.token);
+  const isLogin = useAuth();
 
   return (
       <AppBar position="static" color="white">
@@ -26,7 +26,7 @@ export const AppNavbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Мой сайт
           </Typography>
-          {token ? <Button color="inherit"><ProfileIcon/>Profile</Button>: <Button color="inherit"><LoginIcon/>Login</Button>
+          {isLogin ? <Button color="inherit"><ProfileIcon/>Profile</Button>: <Button color="inherit"><LoginIcon/>Login</Button>
 
           }
         </Toolbar>
