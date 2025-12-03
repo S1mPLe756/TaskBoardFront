@@ -3,7 +3,7 @@ import { useProfile } from "../../hooks/useProfile";
 import ProfileForm from "./ProfileForm";
 import {Box, Typography} from "@mui/material";
 
-export default function ProfilePage() {
+export const ProfilePage = () => {
   const { profile, loading, updateProfile } = useProfile();
 
   if (loading) return <div>Загрузка...</div>;

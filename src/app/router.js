@@ -1,10 +1,12 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage } from "../pages/auth/LoginPage";
-import { HomePage } from "../pages/HomePage";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import {LoginPage} from "../pages/auth/LoginPage";
+import {HomePage} from "../pages/HomePage";
 import {RegisterPage} from "../pages/auth/RegisterPage";
 import {useAuth} from "../hooks/useAuth";
-import ProfilePage from "../pages/profile/ProfilePage";
+import {ProfilePage} from "../pages/profile/ProfilePage";
+import {WorkspacesPage} from "../pages/organization/WorkspacesPage";
+import {CreateWorkspacePage} from "../pages/organization/CreateWorkspacePage";
 
 export const AppRouter = () => {
   const {isLogin} = useAuth();
@@ -12,17 +14,19 @@ export const AppRouter = () => {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/register" element={<RegisterPage/>}/>
+          <Route path="/profile" element={<ProfilePage/>}/>
+          <Route path="/workspaces" element={<WorkspacesPage/>}/>
+          <Route path="/workspaces/create" element={<CreateWorkspacePage/>}/>
 
           <Route
               path="/"
               element={
                 isLogin ? (
-                    <HomePage />
+                    <HomePage/>
                 ) : (
-                    <Navigate to="/login" />
+                    <Navigate to="/login"/>
                 )
               }
           />

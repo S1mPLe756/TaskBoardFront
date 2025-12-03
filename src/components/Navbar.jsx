@@ -19,14 +19,23 @@ export const AppNavbar = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{mr: 2}}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Мой сайт
           </Typography>
-          {isLogin ? <Button color="inherit"><ProfileIcon/>Profile</Button>: <Button color="inherit"><LoginIcon/>Login</Button>
+          <Button
+              color="inherit"
+              href="/workspaces"
+          >
+            Workspaces
+          </Button>
+          {isLogin ? <Button color="inherit"
+                             href="/profile"><ProfileIcon/>Profile</Button> :
+              <Button color="inherit"
+                      href="/login"><LoginIcon/>Login</Button>
 
           }
         </Toolbar>
