@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {GetWorkspaces} from "../usecases/organization/getWorkspaces";
-import {RegisterUser} from "../usecases/auth/registerUser";
 import {CreateWorkspace} from "../usecases/organization/createWorkspace";
 
 export function useWorkspace() {

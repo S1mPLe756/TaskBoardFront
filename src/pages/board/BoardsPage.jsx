@@ -7,19 +7,22 @@ import {
   Paper,
   Typography
 } from "@mui/material";
-import {useWorkspace} from "../../hooks/useWorkspace";
-import {useNavigate} from "react-router-dom";
+import {useBoard} from "../../hooks/useBoard";
+import {useNavigate, useParams} from "react-router-dom";
 
-export const WorkspacesPage = () => {
-  const {workspaces, loading} = useWorkspace();
+export const BoardsPage = () => {
+  const {id} = useParams();
+
+  const {boards, loading} = useBoard(id);
   const navigate = useNavigate();
 
   if (loading) {
     return <div>Загрузка...</div>;
   }
-  if (!workspaces) {
-    return <div>Организации не найдены</div>;
+  if (!boards) {
+    return <div>Досок не найдено</div>;
   }
+
 
   return (
       <Box
@@ -32,26 +35,25 @@ export const WorkspacesPage = () => {
           }}
       >
 
-        <Typography variant="h5" mb={3}>Мои организации</Typography>
+        <Typography variant="h5" mb={3}>Доски организации</Typography>
 
-        <Button variant="contained" href={"/workspaces/create"}>Создать</Button>
+        <Button variant="contained" href={`/workspace/${id}/boards/create`}>Создать</Button>
 
-        <Paper sx={{width: "100%", maxWidth: 500}}>
+        <Paper sx={{width: "80%"}}>
           <List>
-            {workspaces.map((ws) => (
+            {boards.map((br) => (
                 <ListItem
-                    key={ws.id}
+                    key={br.id}
                     button
                     sx={{
                       borderBottom: "1px solid #eee",
                     }}
                     onClick={() => {
-                      navigate(`/workspace/${ws.id}/boards`);
+                      navigate(`boards/${br.id}`);
                     }}
                 >
                   <ListItemText
-                      primary={ws.name}
-                      secondary={ws.description || "Без описания"}
+                      primary={br.title}
                   />
                 </ListItem>
             ))}

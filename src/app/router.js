@@ -7,6 +7,8 @@ import {useAuth} from "../hooks/useAuth";
 import {ProfilePage} from "../pages/profile/ProfilePage";
 import {WorkspacesPage} from "../pages/organization/WorkspacesPage";
 import {CreateWorkspacePage} from "../pages/organization/CreateWorkspacePage";
+import {BoardsPage} from "../pages/board/BoardsPage";
+import {CreateBoardPage} from "../pages/board/CreateBoardPage";
 
 export const AppRouter = () => {
   const {isLogin} = useAuth();
@@ -19,7 +21,8 @@ export const AppRouter = () => {
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/workspaces" element={<WorkspacesPage/>}/>
           <Route path="/workspaces/create" element={<CreateWorkspacePage/>}/>
-
+          <Route path="/workspace/:id/boards" element={<BoardsPage/>}/>
+          <Route path="/workspace/:id/boards/create" element={<CreateBoardPage/>}/>
           <Route
               path="/"
               element={
