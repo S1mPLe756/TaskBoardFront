@@ -10,6 +10,11 @@ class BoardService {
   async createBoard(dto) {
     await api.post("/board", dto);
   }
+
+  async getBoardById(boardId) {
+    const res = await api.get(`/board/${boardId}/full`);
+    return res.data;
+  }
 }
 
 export const boardService = new BoardService();

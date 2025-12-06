@@ -9,6 +9,7 @@ import {WorkspacesPage} from "../pages/organization/WorkspacesPage";
 import {CreateWorkspacePage} from "../pages/organization/CreateWorkspacePage";
 import {BoardsPage} from "../pages/board/BoardsPage";
 import {CreateBoardPage} from "../pages/board/CreateBoardPage";
+import {BoardPage} from "../pages/board/BoardPage";
 
 export const AppRouter = () => {
   const {isLogin} = useAuth();
@@ -23,6 +24,7 @@ export const AppRouter = () => {
           <Route path="/workspaces/create" element={<CreateWorkspacePage/>}/>
           <Route path="/workspace/:id/boards" element={<BoardsPage/>}/>
           <Route path="/workspace/:id/boards/create" element={<CreateBoardPage/>}/>
+          <Route path="/boards/:boardId" element={<BoardPage/>}/>
           <Route
               path="/"
               element={

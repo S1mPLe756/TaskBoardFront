@@ -49,7 +49,7 @@ export const BoardsPage = () => {
                       borderBottom: "1px solid #eee",
                     }}
                     onClick={() => {
-                      navigate(`boards/${br.id}`);
+                      navigate(`/boards/${br.id}`);
                     }}
                 >
                   <ListItemText

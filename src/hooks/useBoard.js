@@ -3,10 +3,12 @@ import {GetWorkspaceBoards} from "../usecases/board/getWorkspaceBoards";
 import {
   CreateBoardForWorkspace
 } from "../usecases/board/createBoardForWorkspace";
+import {GetBoard} from "../usecases/board/getBoard";
 
 export function useBoard(workspaceId) {
   const [loading, setLoading] = useState(false);
   const [boards, setBoards] = useState(null);
+  const [board, setBoard] = useState(null);
 
   const loadBoards = async (workspaceId) => {
     setLoading(true);
@@ -21,6 +23,20 @@ export function useBoard(workspaceId) {
       setLoading(false);
     }
   };
+
+  const getBoard = async (boardId) => {
+    setLoading(true);
+    try {
+      const data = await GetBoard(boardId);
+      setBoard(data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+      setLoading(false);
+    }
+  }
 
   const createBoard = async (title, workspaceId) => {
     setLoading(true);
@@ -37,12 +53,16 @@ export function useBoard(workspaceId) {
   };
 
   useEffect(() => {
-    loadBoards(workspaceId);
+    if(workspaceId !== null) {
+      loadBoards(workspaceId);
+    }
   }, []);
 
   return {
     boards,
     loading,
+    board,
+    getBoard,
     createBoard
   };
 }
