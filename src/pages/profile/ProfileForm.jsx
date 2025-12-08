@@ -42,7 +42,7 @@ export default function ProfileForm({profile, onSave}) {
 
       <div>
         <label>Био:</label>
-        <input
+        <TextField
             type="text"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
@@ -52,7 +52,7 @@ export default function ProfileForm({profile, onSave}) {
 
       <div style={{marginTop: 10}}>
         <label>Аватар URL:</label>
-        <input
+        <TextField
             type="text"
             value={avatarUrl ?? ""}
             onChange={(e) => setAvatarUrl(e.target.value)}

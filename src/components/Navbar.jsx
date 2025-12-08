@@ -23,9 +23,19 @@ export const AppNavbar = () => {
           >
             <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+
+          <Typography
+              variant="h6"
+              sx={{
+                flexGrow: 1,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+              onClick={() => (window.location.href = "/")}
+          >
             Мой сайт
           </Typography>
+          
           <Button
               color="inherit"
               href="/workspaces"
