@@ -1,5 +1,5 @@
 import {boardService} from "../../features/board/boardService";
 
-export const GetBoard = async (boardId) => {
+export const GetBoardById = async (boardId) => {
   return await boardService.getBoardById(boardId);
 };

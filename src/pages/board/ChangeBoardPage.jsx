@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { notifyError } from "../../services/notificationService";
 import {useBoard} from "../../hooks/useBoard";
 import {useParams} from "react-router-dom";
 
-export const CreateBoardPage = () => {
-  const [name, setName] = useState("");
+export const ChangeBoardPage = () => {
+  const [title, setTitle] = useState("");
 
-  const {id} = useParams();
+  const {id, boardId} = useParams();
 
-  const {loading, createBoard } = useBoard(id);
+  const {loading, getBoard, updateBoard } = useBoard(id, false);
 
 
-  const handleCreate = async (e) => {
-    if (!name.trim()) {
+  const handleUpdate = async (e) => {
+    if (!title.trim()) {
       notifyError("Введите название");
       return;
     }
     e.preventDefault();
-    await createBoard(name, id);
+    await updateBoard(title, boardId);
 
   };
+
+  useEffect(() => {
+    const load = async () => {
+      const br = await getBoard(boardId);
+      if (!br) return;
+
+      setTitle(br.title);
+    };
+
+    load();
+  }, [id]);
 
   return (
       <Box
@@ -33,15 +44,15 @@ export const CreateBoardPage = () => {
       >
         <Paper sx={{ p: 4 }}>
           <Typography variant="h5" gutterBottom>
-            Создание доски
+            Изменение доски
           </Typography>
 
           <TextField
               label="Название"
               fullWidth
               sx={{ mt: 2 }}
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={title}
+              onChange={e => setTitle(e.target.value)}
           />
 
           <Button
@@ -49,9 +60,9 @@ export const CreateBoardPage = () => {
               fullWidth
               sx={{ mt: 3 }}
               disabled={loading}
-              onClick={handleCreate}
+              onClick={handleUpdate}
           >
-            {loading ? "Создание..." : "Создать"}
+            {loading ? "Изменение..." : "Изменить"}
           </Button>
         </Paper>
       </Box>

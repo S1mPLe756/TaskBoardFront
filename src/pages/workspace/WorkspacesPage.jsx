@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import {useWorkspace} from "../../hooks/useWorkspace";
 import {useNavigate} from "react-router-dom";
+import {DeleteColumnDialog} from "../../shared/DeleteDialog";
 
 export const WorkspacesPage = () => {
   const {workspaces, loading, deleteWorkspace} = useWorkspace();
@@ -73,10 +74,10 @@ export const WorkspacesPage = () => {
                       primary={ws.name}
                       secondary={ws.description || "Без описания"}
                   />
-                  <Button onClick={(e) => {
+                  {ws.isYour && <Button onClick={(e) => {
                     e.stopPropagation();
                     navigate(`/workspaces/${ws.id}/change`);
-                  }}><EditIcon/></Button>
+                  }}><EditIcon/></Button>}
                   <Button onClick={(e) => {
                     e.stopPropagation();
                     handleOpen(ws.id);
@@ -86,18 +87,10 @@ export const WorkspacesPage = () => {
             ))}
           </List>
         </Paper>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Удалить организацию?</DialogTitle>
-          <DialogContent>
-            Это действие необратимо. Вы уверены, что хотите удалить?
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Отмена</Button>
-            <Button color="error" onClick={handleDelete}>
-              Удалить
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteColumnDialog open={open}
+                            onClose={handleClose}
+                            onDelete={handleDelete}
+                            item="организацию"/>
       </Box>
   );
 }

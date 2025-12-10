@@ -26,7 +26,7 @@ class WorkspaceService {
   }
 
   async changeWorkspace(workspaceId, dto) {
-    await api.put(`/workspace/${workspaceId}`, dto);
+    await api.patch(`/workspace/${workspaceId}`, dto);
   }
 
   async getWorkspace(workspaceId) {

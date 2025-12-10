@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Avatar,
-  Box, Button,
+  Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
   List,
   ListItem,
   ListItemText,
@@ -11,11 +11,15 @@ import {
 import {useBoard} from "../../hooks/useBoard";
 import {useNavigate, useParams} from "react-router-dom";
 import {useWorkspaceMembers} from "../../hooks/useWorkspaceMembers";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const BoardsPage = () => {
   const {id} = useParams();
+  const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
-  const {boards, loading} = useBoard(id);
+  const {boards, deleteBoard, loading} = useBoard(id);
   const {
     members,
     loading: membersLoading,
@@ -30,6 +34,22 @@ export const BoardsPage = () => {
   if (!boards) {
     return <div>Досок не найдено</div>;
   }
+
+  const handleOpen = (id) => {
+    setSelectedId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedId(null);
+  };
+
+  const handleDelete = async () => {
+    await deleteBoard(selectedId);
+    handleClose();
+  };
+
 
   return (
       <Box
@@ -99,20 +119,41 @@ export const BoardsPage = () => {
         {/* Список досок */}
         <Paper sx={{width: "80%", mt: 2}}>
           <List>
-            {boards.map((br) => (
+            {boards.boards.map((br) => (
                 <ListItem
                     key={br.id}
                     button
                     sx={{
                       borderBottom: "1px solid #eee",
                     }}
-                    onClick={() => navigate(`/boards/${br.id}`)}
+                    onClick={() => navigate(`/workspace/${id}/boards/${br.id}`)}
                 >
                   <ListItemText primary={br.title}/>
+
+                  {boards.canChangeWorkspace && [<Button onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/workspace/${id}/boards/${br.id}/change`);
+                  }}><EditIcon/></Button>,
+                  <Button onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpen(br.id);
+                  }}><DeleteIcon color="error"/></Button>]}
                 </ListItem>
             ))}
           </List>
         </Paper>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Удалить доску?</DialogTitle>
+          <DialogContent>
+            Это действие необратимо. Вы уверены, что хотите удалить?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Отмена</Button>
+            <Button color="error" onClick={handleDelete}>
+              Удалить
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
   );
 }

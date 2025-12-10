@@ -1,3 +1,3 @@
-export function Workspace({id, name, description, members}) {
-  return { id, name, description, members };
+export function Workspace({id, name, description, members, isYour}) {
+  return { id, name, description, members, isYour };
 }

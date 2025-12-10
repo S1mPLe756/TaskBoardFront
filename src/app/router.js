@@ -17,6 +17,7 @@ import {
   AcceptInvitePageJs
 } from "../pages/invite/AcceptInvitePage.js";
 import {ChangeWorkspacePage} from "../pages/workspace/ChangeWorkspacePage";
+import {ChangeBoardPage} from "../pages/board/ChangeBoardPage";
 
 export const AppRouter = () => {
   const {isLogin} = useAuth();
@@ -30,9 +31,10 @@ export const AppRouter = () => {
           <Route path="/workspaces" element={<WorkspacesPage/>}/>
           <Route path="/workspaces/create" element={<CreateWorkspacePage/>}/>
           <Route path="/workspace/:id/boards" element={<BoardsPage/>}/>
+          <Route path="/workspace/:id/boards/:boardId/change" element={<ChangeBoardPage/>}/>
           <Route path="/workspaces/:id/change" element={<ChangeWorkspacePage/>}/>
           <Route path="/workspace/:id/boards/create" element={<CreateBoardPage/>}/>
-          <Route path="/boards/:boardId" element={<BoardPage/>}/>
+          <Route path="/workspace/:id/boards/:boardId" element={<BoardPage/>}/>
           <Route path="/workspace/:id/invite" element={<InviteUserPage/>}/>
           <Route path="/invite/:id/accept" element={<AcceptInvitePage/>}/>
           <Route
